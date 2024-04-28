@@ -23,14 +23,18 @@ app.post('/posts', async (req, res) => {
     posts[id] = {
         id, title
     };
-
-    await axios.post('http://event-bus-srv:4005/events', {
-        type: 'PostCreated',
-        data: {
-            id, title
-        }
-    });
-    res.status(201).send(posts[id]);
+    try {
+        await axios.post('http://event-bus-srv:4005/events', {
+            type: 'PostCreated',
+            data: {
+                id, title
+            }
+        });
+        res.status(201).send(posts[id]);
+    } catch (error) {
+        console.error(error);
+        res.status(400).send({ error: 'request error' });
+    }
 });
 
 app.post('/events', (req, res) => {
@@ -40,6 +44,6 @@ app.post('/events', (req, res) => {
 
 
 app.listen(4000, () => {
-    console.log('version v2.1');
+    console.log('version v2.2');
     console.log('posts service is listening on 4000');
 });

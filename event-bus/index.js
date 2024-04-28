@@ -14,13 +14,13 @@ app.post('/events', async (req, res) => {
     events.push(event);
     console.log('received a request');
     await axios.post('http://posts-clusterip-srv:4000/events', event);
-    await axios.post('http://localhost:4001/events', event);
-    try {
-        await axios.post('http://localhost:4002/events', event);
-    } catch (error) {
-        console.log(error);
-    }
-    await axios.post('http://localhost:4003/events', event);
+    // await axios.post('http://localhost:4001/events', event);
+    // try {
+    //     await axios.post('http://localhost:4002/events', event);
+    // } catch (error) {
+    //     console.log(error);
+    // }
+    // await axios.post('http://localhost:4003/events', event);
 
     res.send({ status: 'OK' });
 });
@@ -29,4 +29,8 @@ app.get('/events', (req, res) => {
     res.send(events);
 });
 
-app.listen(4005, () => console.log('Event Broker is listening on 4005'));
+app.get('/', (req, res) => {
+    res.status(200).send('Hello world!');
+});
+
+app.listen(4005, () => console.log('Event Broker is listening on 4005, v1'));

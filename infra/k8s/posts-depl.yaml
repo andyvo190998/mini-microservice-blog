@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: posts
-          image: andyvo1909/posts-service
+          image: andyvo1909/posts
 ---
 apiVersion: v1
 kind: Service
@@ -22,9 +22,9 @@ metadata:
   name: posts-clusterip-srv
 spec:
   selector:
-    app: posts-clusterip-srv
+    app: posts
   ports:
-    - name: posts-clusterip-srv
+    - name: posts
       protocol: TCP
       port: 4000
       targetPort: 4000
